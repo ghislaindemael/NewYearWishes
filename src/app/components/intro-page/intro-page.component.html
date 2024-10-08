@@ -1,0 +1,18 @@
+<div class="w-full min-h-screen flex flex-col items-center justify-center relative">
+  <div class="relative w-full" style="padding-top: 56.25%;">
+    <video #videoPlayer (ended)="onVideoEnded()" (timeupdate)="onTimeUpdate($event)"
+           autoplay muted src="{{introVideoFilepath}}" type="video/mp4" class="absolute inset-0 w-full h-full object-cover">
+      Your browser does not support the video tag.
+    </video>
+    <button *ngIf="!isPlaying" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-green-200 p-2 px-3 rounded-md border border-green-700" (click)="playVideo()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-green-700">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+      </svg>
+
+    </button>
+  </div>
+
+  <div *ngIf="showTextInput" class="absolute top-[85%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border border-yellow-400 shadow-md rounded-md">
+    <input type="text" class="w-full p-1 border border-yellow-400 rounded-md focus:outline-none focus:border-yellow-400" placeholder="Password">
+  </div>
+</div>
