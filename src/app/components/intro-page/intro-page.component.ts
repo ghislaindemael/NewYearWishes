@@ -1,6 +1,6 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {NgIf} from '@angular/common';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-intro-page',
@@ -15,8 +15,9 @@ import {NgIf} from '@angular/common';
 export class IntroPageComponent {
 
   showTextInput = false;
-  introVideoFilepath = "/videos/Intro_ITA_V1.mp4";
-  framesBeforeEnd = 2;
+  introVideoFilepath = "/videos/Intro_ITA_V2.mp4";
+  seconds = 0.2;
+  isPlaying = false;
 
   @ViewChild('videoPlayer', { static: true }) videoPlayer!: ElementRef<HTMLVideoElement>;
 
@@ -25,11 +26,12 @@ export class IntroPageComponent {
   }
 
   onTimeUpdate(event: Event) {
+    this.isPlaying = true;
     const video = this.videoPlayer.nativeElement;
     const currentTime = video.currentTime;
     const duration = video.duration;
 
-    const stopTime = duration - (this.framesBeforeEnd / video.playbackRate);
+    const stopTime = duration - (this.seconds / video.playbackRate);
 
     if (currentTime >= stopTime) {
       video.pause();
@@ -37,5 +39,9 @@ export class IntroPageComponent {
     }
   }
 
-
+  playVideo() {
+    const video = this.videoPlayer.nativeElement;
+    video.play();
+    this.isPlaying = true;
+  }
 }
