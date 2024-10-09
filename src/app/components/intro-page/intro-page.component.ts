@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgIf } from '@angular/common';
+import {AuthService} from '../../auth/services/auth/auth.service';
 
 @Component({
   selector: 'app-intro-page',
@@ -21,6 +22,9 @@ export class IntroPageComponent {
   debounceTimeout: any;
 
   @ViewChild('videoPlayer', { static: true }) videoPlayer!: ElementRef<HTMLVideoElement>;
+
+  constructor(private authService: AuthService) {
+  }
 
   onVideoEnded() {
     this.showTextInput = true;
@@ -59,10 +63,9 @@ export class IntroPageComponent {
     }, 500);
   }
 
-  onTextChange(value: string) {
-    if(value.length >= 10){
-      console.log(value);
-      //Process password
+  async onTextChange(value: string) {
+    if (value.length >= 10) {
+      await this.authService.authenticateUser(value);
     }
   }
 }
