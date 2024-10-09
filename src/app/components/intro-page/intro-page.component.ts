@@ -18,6 +18,7 @@ export class IntroPageComponent {
   introVideoFilepath = "/videos/Intro_ITA_V2.mp4";
   seconds = 0.2;
   isPlaying = false;
+  debounceTimeout: any;
 
   @ViewChild('videoPlayer', { static: true }) videoPlayer!: ElementRef<HTMLVideoElement>;
 
@@ -43,5 +44,25 @@ export class IntroPageComponent {
     const video = this.videoPlayer.nativeElement;
     video.play();
     this.isPlaying = true;
+  }
+
+  onInputChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const text = inputElement.value;
+
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+    }
+
+    this.debounceTimeout = setTimeout(() => {
+      this.onTextChange(text);
+    }, 500);
+  }
+
+  onTextChange(value: string) {
+    if(value.length >= 10){
+      console.log(value);
+      //Process password
+    }
   }
 }
