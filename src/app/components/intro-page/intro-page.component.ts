@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import { NgIf } from '@angular/common';
 import {AuthService} from '../../auth/services/auth/auth.service';
 
@@ -23,7 +23,7 @@ export class IntroPageComponent {
 
   @ViewChild('videoPlayer', { static: true }) videoPlayer!: ElementRef<HTMLVideoElement>;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   onVideoEnded() {
@@ -65,7 +65,10 @@ export class IntroPageComponent {
 
   async onTextChange(value: string) {
     if (value.length >= 10) {
-      await this.authService.authenticateUser(value);
+      const success = await this.authService.authenticateUser(value);
+      if(success){
+          this.router.navigate(["/userselect"]);
+      }
     }
   }
 }
