@@ -2,14 +2,16 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import { NgIf } from '@angular/common';
 import {AuthService} from '../../auth/services/auth/auth.service';
+import {LanguageSelectionComponent} from '../language-selection/language-selection.component';
 
 @Component({
   selector: 'app-intro-page',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    NgIf
-  ],
+    imports: [
+        RouterOutlet,
+        NgIf,
+        LanguageSelectionComponent
+    ],
   templateUrl: './intro-page.component.html',
   styleUrl: './intro-page.component.css'
 })
