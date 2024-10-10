@@ -18,5 +18,6 @@ export class LanguageSelectionComponent {
 
     setLanguage(lang: string) {
         this.cookieService.setItem('lang', lang);
+        window.location.reload();
     }
 }
