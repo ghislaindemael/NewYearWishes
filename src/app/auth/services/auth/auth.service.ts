@@ -1,14 +1,19 @@
 import {Injectable, OnInit, signal, WritableSignal} from '@angular/core';
 import {createClient, User} from '@supabase/supabase-js';
-import {environment} from '../../../../environments/environment';
+import {SupabaseService} from '../supabase/supabase.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService implements OnInit {
 
-    private supabase = createClient(environment.supabaseUrl!, environment.supabaseKey!);
+    private supabase;
     private loggedInUser : WritableSignal<User | null> = signal(null);
+
+    constructor(private supabaseService: SupabaseService) {
+        this.supabase = supabaseService.client;
+    }
+
 
     async ngOnInit() {
         await this.retrieveOrRecreateSession();
