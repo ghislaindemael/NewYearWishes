@@ -1,9 +1,10 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../auth/services/auth/auth.service';
 import {LanguageSelectionComponent} from '../language-selection/language-selection.component';
 import {CookieService} from '../../services/cookie/cookie.service';
+import {WishesService} from '../../services/wishes/wishes.service';
 
 @Component({
     selector: 'app-intro-page',
@@ -17,9 +18,9 @@ import {CookieService} from '../../services/cookie/cookie.service';
     styleUrl: './intro-page.component.css'
 })
 export class IntroPageComponent implements AfterViewInit {
-    showTextInput = false;
+    showPasswordInput = false;
     introVideoFilepath = "/videos/intro.mp4";
-    seconds = 0.2;
+    secondsBeforeEnd = 0.1;
     isPlaying = false;
     debounceTimeout: any;
     audiofilePath: string = '';
@@ -27,12 +28,17 @@ export class IntroPageComponent implements AfterViewInit {
 
     @ViewChild('videoPlayer', {static: true}) videoPlayer!: ElementRef<HTMLVideoElement>;
     @ViewChild('audioPlayer', {static: true}) audioPlayer!: ElementRef<HTMLAudioElement>;
+    @ViewChild('passwordInput', { static: true }) passwordInput!: ElementRef<HTMLInputElement>;
+
 
     constructor(
         private authService: AuthService,
         private router: Router,
         private cookieService: CookieService,
-        private cdr: ChangeDetectorRef) {
+        private cdr: ChangeDetectorRef,
+        private renderer: Renderer2,
+        private wishesService: WishesService
+    ) {
     }
 
     ngAfterViewInit() {
@@ -42,8 +48,21 @@ export class IntroPageComponent implements AfterViewInit {
     }
 
     onVideoEnded() {
-        this.showTextInput = true;
-        this.audioPlayer.nativeElement.pause();
+
+
+        if(this.introVideoFilepath.includes("intro.mp4")){
+            this.showPasswordInput = true;
+        } else {
+            this.areWishesReadyForUser();
+        }
+    }
+
+    async areWishesReadyForUser() {
+        if (await this.wishesService.areWishesReady()) {
+            this.router.navigate(['/userselect']);
+        } else {
+            this.router.navigate(['/comebacklater']);
+        }
     }
 
     onTimeUpdate(event: Event) {
@@ -52,25 +71,24 @@ export class IntroPageComponent implements AfterViewInit {
         const currentTime = video.currentTime;
         const duration = video.duration;
 
-        const stopTime = duration - (this.seconds / video.playbackRate);
+        const stopTime = duration - (this.secondsBeforeEnd / video.playbackRate);
 
         if (currentTime >= stopTime) {
             video.pause();
             this.audioPlayer.nativeElement.pause();
-            this.showTextInput = true;
+            this.onVideoEnded();
         }
     }
 
     playVideo() {
-        const video = this.videoPlayer.nativeElement;
-        video.play();
-        this.audioPlayer.nativeElement.play();
-        this.isPlaying = true;
-    }
+        this.audioPlayer.nativeElement.load();
+        this.videoPlayer.nativeElement.load();
+        this.audioPlayer.nativeElement.play().then(r => {
+            const video = this.videoPlayer.nativeElement;
+            video.play();
+            this.isPlaying = true;
+        });
 
-    onAudioEnded() {
-        this.videoPlayer.nativeElement.pause();
-        this.showTextInput = true;
     }
 
     onInputChange(event: Event) {
@@ -87,10 +105,12 @@ export class IntroPageComponent implements AfterViewInit {
     }
 
     async onTextChange(value: string) {
-        if (value.length >= 10) {
+        if (value.length >= 12) {
             const success = await this.authService.authenticateUser(value);
             if (success) {
-                this.router.navigate(["/userselect"]);
+                this.showPasswordInput = false;
+                this.introVideoFilepath = "/videos/intro2.mp4";
+                this.videoPlayer.nativeElement.load();
             }
         }
     }
