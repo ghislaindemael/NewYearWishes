@@ -3,8 +3,8 @@
         <div class="absolute top-0 left-0 z-10 p-1">
             <app-language-selection></app-language-selection>
         </div>
-        <video #videoPlayer (ended)="onVideoEnded()" (timeupdate)="onTimeUpdate($event)"
-               autoplay muted="muted" src="{{introVideoFilepath}}" type="video/mp4"
+        <video #videoPlayer (timeupdate)="onTimeUpdate($event)"
+               autoplay muted src="{{introVideoFilepath}}" type="video/mp4"
                class="absolute inset-0 w-full h-full object-cover">
             Your browser does not support the video tag.
         </video>
@@ -21,7 +21,7 @@
                       d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"/>
             </svg>
         </button>
-        <input *ngIf="showTextInput" type="text" (input)="onInputChange($event)"
+        <input #passwordInput *ngIf="showPasswordInput" type="text" (input)="onInputChange($event)"
                class="absolute top-[85%] left-1/2 transform -translate-x-1/2 w-1/5 max-w-[200px] p-1 border border-yellow-400 rounded-md focus:outline-none focus:border-yellow-400"
                placeholder="Password">
     </div>
