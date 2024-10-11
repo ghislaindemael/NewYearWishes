@@ -61,7 +61,7 @@ export class IntroPageComponent implements AfterViewInit {
         if (await this.wishesService.areWishesReady()) {
             this.router.navigate(['/userselect']);
         } else {
-            this.router.navigate(['comebacklater']);
+            this.router.navigate(['/comebacklater']);
         }
     }
 
@@ -81,17 +81,14 @@ export class IntroPageComponent implements AfterViewInit {
     }
 
     playVideo() {
+        this.audioPlayer.nativeElement.load();
+        this.videoPlayer.nativeElement.load();
         this.audioPlayer.nativeElement.play().then(r => {
             const video = this.videoPlayer.nativeElement;
             video.play();
             this.isPlaying = true;
         });
 
-    }
-
-    onAudioEnded() {
-        this.videoPlayer.nativeElement.pause();
-        this.showPasswordInput = true;
     }
 
     onInputChange(event: Event) {
