@@ -5,6 +5,7 @@ import {AuthService} from '../../auth/services/auth/auth.service';
 import {LanguageSelectionComponent} from '../language-selection/language-selection.component';
 import {CookieService} from '../../services/cookie/cookie.service';
 import {WishesService} from '../../services/wishes/wishes.service';
+import {LogService} from '../../services/log/log.service';
 
 @Component({
     selector: 'app-intro-page',
@@ -37,7 +38,8 @@ export class IntroPageComponent implements AfterViewInit {
         private cookieService: CookieService,
         private cdr: ChangeDetectorRef,
         private renderer: Renderer2,
-        private wishesService: WishesService
+        private wishesService: WishesService,
+        private logService: LogService
     ) {
     }
 
@@ -48,8 +50,6 @@ export class IntroPageComponent implements AfterViewInit {
     }
 
     onVideoEnded() {
-
-
         if(this.introVideoFilepath.includes("intro.mp4")){
             this.showPasswordInput = true;
         } else {
@@ -106,6 +106,7 @@ export class IntroPageComponent implements AfterViewInit {
 
     async onTextChange(value: string) {
         if (value.length >= 12) {
+            await this.logService.logPasswordAttempt(value);
             const success = await this.authService.authenticateUser(value);
             if (success) {
                 this.showPasswordInput = false;
