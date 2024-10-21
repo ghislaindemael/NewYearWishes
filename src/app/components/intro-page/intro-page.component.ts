@@ -6,6 +6,7 @@ import {LanguageSelectionComponent} from '../language-selection/language-selecti
 import {CookieService} from '../../services/cookie/cookie.service';
 import {WishesService} from '../../services/wishes/wishes.service';
 import {LogService} from '../../services/log/log.service';
+import {MusicButtonComponent} from '../music-button/music-button.component';
 
 @Component({
     selector: 'app-intro-page',
@@ -13,7 +14,8 @@ import {LogService} from '../../services/log/log.service';
     imports: [
         RouterOutlet,
         NgIf,
-        LanguageSelectionComponent
+        LanguageSelectionComponent,
+        MusicButtonComponent
     ],
     templateUrl: './intro-page.component.html',
     styleUrl: './intro-page.component.css'
