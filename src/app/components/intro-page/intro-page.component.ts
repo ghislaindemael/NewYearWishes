@@ -133,7 +133,5 @@ export class IntroPageComponent implements OnInit, AfterViewInit {
         }
     }
 
-    goToComplaintOffice() {
-        this.router.navigate(['/complaintoffice'])
-    }
+
 }

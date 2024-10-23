@@ -25,8 +25,7 @@ export const routes: Routes = [
         component: ComplaintOfficeComponent
     },
     {
-        path: "",
+        path: "**",
         redirectTo: "intro",
-        pathMatch: "full"
     }
 ];
