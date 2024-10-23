@@ -4,11 +4,12 @@ import {CookieService} from './services/cookie/cookie.service';
 import {LanguageSelectionComponent} from './components/language-selection/language-selection.component';
 import {HttpClient} from '@angular/common/http';
 import {firstValueFrom} from 'rxjs';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-    imports: [RouterOutlet, LanguageSelectionComponent],
+    imports: [RouterOutlet, LanguageSelectionComponent, MatDialogModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
