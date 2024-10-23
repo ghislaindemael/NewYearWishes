@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../auth/services/auth/auth.service';
@@ -6,6 +6,10 @@ import {LanguageSelectionComponent} from '../language-selection/language-selecti
 import {CookieService} from '../../services/cookie/cookie.service';
 import {WishesService} from '../../services/wishes/wishes.service';
 import {LogService} from '../../services/log/log.service';
+import {MusicButtonComponent} from '../music-button/music-button.component';
+import {NotReadyYetPopupComponent} from '../not-ready-yet-popup/not-ready-yet-popup.component';
+import {MatDialog} from '@angular/material/dialog';
+
 
 @Component({
     selector: 'app-intro-page',
@@ -13,45 +17,49 @@ import {LogService} from '../../services/log/log.service';
     imports: [
         RouterOutlet,
         NgIf,
-        LanguageSelectionComponent
+        LanguageSelectionComponent,
+        MusicButtonComponent,
+        NotReadyYetPopupComponent
     ],
     templateUrl: './intro-page.component.html',
     styleUrl: './intro-page.component.css'
 })
-export class IntroPageComponent implements AfterViewInit {
+export class IntroPageComponent implements OnInit, AfterViewInit {
     showPasswordInput = false;
-    introVideoFilepath = "/videos/intro.mp4";
+    introVideoFilepath = "";
     secondsBeforeEnd = 0.1;
     isPlaying = false;
     debounceTimeout: any;
-    audiofilePath: string = '';
-
 
     @ViewChild('videoPlayer', {static: true}) videoPlayer!: ElementRef<HTMLVideoElement>;
-    @ViewChild('audioPlayer', {static: true}) audioPlayer!: ElementRef<HTMLAudioElement>;
-    @ViewChild('passwordInput', { static: true }) passwordInput!: ElementRef<HTMLInputElement>;
-
+    @ViewChild('passwordInput', {static: true}) passwordInput!: ElementRef<HTMLInputElement>;
 
     constructor(
         private authService: AuthService,
         private router: Router,
         private cookieService: CookieService,
         private cdr: ChangeDetectorRef,
-        private renderer: Renderer2,
         private wishesService: WishesService,
-        private logService: LogService
+        private logService: LogService,
+        private dialog: MatDialog,
     ) {
+        const lang = this.cookieService.getItem('lang');
+        this.introVideoFilepath = `/videos/${lang}/intro_qualite.mp4`;
+    }
+
+    ngOnInit() {
     }
 
     ngAfterViewInit() {
         const lang = this.cookieService.getItem('lang');
-        this.audiofilePath = `/audiotracks/${lang}/intro.mp3`;
+        this.introVideoFilepath = `/videos/${lang}/intro_qualite.mp4`;
         this.cdr.detectChanges();
     }
 
     onVideoEnded() {
-        if(this.introVideoFilepath.includes("intro.mp4")){
+        if (this.introVideoFilepath.includes("intro_qualite.mp4")) {
             this.showPasswordInput = true;
+
         } else {
             this.areWishesReadyForUser();
         }
@@ -61,7 +69,10 @@ export class IntroPageComponent implements AfterViewInit {
         if (await this.wishesService.areWishesReady()) {
             this.router.navigate(['/userselect']);
         } else {
-            this.router.navigate(['/comebacklater']);
+            //this.router.navigate(['/comebacklater']);
+            this.dialog.open(NotReadyYetPopupComponent, {
+                panelClass: 'custom-dialog-container',
+            });
         }
     }
 
@@ -75,20 +86,14 @@ export class IntroPageComponent implements AfterViewInit {
 
         if (currentTime >= stopTime) {
             video.pause();
-            this.audioPlayer.nativeElement.pause();
             this.onVideoEnded();
         }
     }
 
     playVideo() {
-        this.audioPlayer.nativeElement.load();
         this.videoPlayer.nativeElement.load();
-        this.audioPlayer.nativeElement.play().then(r => {
-            const video = this.videoPlayer.nativeElement;
-            video.play();
-            this.isPlaying = true;
-        });
-
+        this.videoPlayer.nativeElement.play();
+        this.isPlaying = true;
     }
 
     onInputChange(event: Event) {
@@ -114,5 +119,10 @@ export class IntroPageComponent implements AfterViewInit {
                 this.videoPlayer.nativeElement.load();
             }
         }
+    }
+
+    skipVideo() {
+        const video = this.videoPlayer.nativeElement;
+        video.currentTime = video.duration - (this.secondsBeforeEnd / video.playbackRate);
     }
 }
