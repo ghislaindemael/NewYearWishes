@@ -1,0 +1,61 @@
+<div class="min-h-full w-full flex flex-col items-center justify-center relative">
+
+    <video *ngIf="!showComplaintForm" #videoPlayer autoplay muted (ended)="onVideoEnded()"
+           src="{{videoPath}}" type="video/mp4"
+           class="absolute inset-0 w-full h-full object-cover">
+        Your browser does not support the video tag.
+    </video>
+
+    <img *ngIf="showComplaintForm" src="/complaint.webp" class=" absolute inset-0 w-full h-full">
+    <div *ngIf="showComplaintForm" class="absolute w-2/5 h-fit -translate-y-1/2 top-1/2 left-[5%]">
+        <div class="size-full flex flex-col p-3 rounded-xl border-2 border-gray-500 bg-white items-center">
+            <div class="text-3xl font-semibold mb-5">
+                {{ lang.getText('complaintform') }}
+            </div>
+            <div class="flex flex-col w-full gap-2">
+                <div>
+                    <label for="name" class="block text-sm font-medium leading-6 text-gray-900">
+                        {{ lang.getText('yourname') }}
+                    </label>
+                    <div class="mt-2">
+                        <input type="text" name="name" id="name" [(ngModel)]="complaintData.name"
+                               class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               placeholder="Alphonse le cactus">
+                    </div>
+                </div>
+                <div class="flex flex-col w-full">
+                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">
+                        {{ lang.getText('howtocontact') }}
+                    </label>
+                    <div class="relative mt-2 rounded-md shadow-sm">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                 aria-hidden="true" data-slot="icon">
+                                <path
+                                    d="M3 4a2 2 0 0 0-2 2v1.161l8.441 4.221a1.25 1.25 0 0 0 1.118 0L19 7.162V6a2 2 0 0 0-2-2H3Z"/>
+                                <path
+                                    d="m19 8.839-7.77 3.885a2.75 2.75 0 0 1-2.46 0L1 8.839V14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.839Z"/>
+                            </svg>
+                        </div>
+                        <input type="email" name="email" id="email" [(ngModel)]="complaintData.contact"
+                               class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               placeholder="you@example.com">
+                    </div>
+                </div>
+                <div>
+                    <label for="comment"
+                           class="block text-sm font-medium leading-6 text-gray-900">{{ lang.getText('yourcomplaint') }}</label>
+                    <div class="mt-2">
+                        <textarea rows="6" name="comment" id="comment" [(ngModel)]="complaintData.complaint"
+                                  class="resize-none block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                    </div>
+                </div>
+                <button (click)="submitComplaint()" type="button"
+                        class="rounded-md font-semibold w-full bg-white px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                    {{ lang.getText('send') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

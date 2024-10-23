@@ -1,24 +1,36 @@
 import {Component, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import {CookieService} from './services/cookie/cookie.service';
 import {LanguageSelectionComponent} from './components/language-selection/language-selection.component';
 import {HttpClient} from '@angular/common/http';
 import {firstValueFrom} from 'rxjs';
 import {MatDialogModule} from '@angular/material/dialog';
+import {NgIf} from '@angular/common';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-    imports: [RouterOutlet, LanguageSelectionComponent, MatDialogModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    standalone: true,
+    imports: [RouterOutlet, LanguageSelectionComponent, MatDialogModule, NgIf],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
     title = 'LesVoeuxDeGhislain';
+    currentUrl: string = '';
 
-    constructor(private cookieService: CookieService, private http: HttpClient) {}
+    constructor(
+        private cookieService: CookieService,
+        private http: HttpClient,
+        private router: Router,
+    ) {
+    }
 
     ngOnInit() {
+        this.router.events.subscribe(() => {
+            this.currentUrl = this.router.url;
+            //console.log(this.currentUrl);
+        });
+
         if (this.cookieService.getItem('lang') == null) {
             this.getUserCountry().then(country => {
                 let lang = 'FR';
@@ -41,5 +53,13 @@ export class AppComponent implements OnInit {
             console.error('Error getting user country:', error);
             return 'FR';
         }
+    }
+
+    goToComplaintOffice() {
+        this.router.navigate(['/complaintoffice'])
+    }
+
+    goBack() {
+        this.router.navigate(['/']);
     }
 }
