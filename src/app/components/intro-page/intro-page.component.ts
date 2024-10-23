@@ -58,8 +58,8 @@ export class IntroPageComponent implements OnInit, AfterViewInit {
 
     onVideoEnded() {
         if (this.introVideoFilepath.includes("intro_qualite.mp4")) {
+            this.isPlaying = false;
             this.showPasswordInput = true;
-
         } else {
             this.areWishesReadyForUser();
         }
@@ -124,5 +124,16 @@ export class IntroPageComponent implements OnInit, AfterViewInit {
     skipVideo() {
         const video = this.videoPlayer.nativeElement;
         video.currentTime = video.duration - (this.secondsBeforeEnd / video.playbackRate);
+    }
+
+    async skipLogin() {
+        if (await this.authService.isLoggedIn()) {
+            //console.log("Already logged in");
+            this.router.navigate(['/userselect']);
+        }
+    }
+
+    goToComplaintOffice() {
+        this.router.navigate(['/complaintoffice'])
     }
 }

@@ -1,0 +1,19 @@
+<div class="w-full min-h-screen flex flex-col items-center justify-center relative">
+    <div class="relative w-full" style="padding-top: 56.25%;">
+
+        <video *ngIf="!showComplaintForm" #videoPlayer autoplay muted (ended)="onVideoEnded()"
+               src="{{videoPath}}" type="video/mp4"
+               class="absolute inset-0 w-full h-full object-cover">
+            Your browser does not support the video tag.
+        </video>
+
+        <img *ngIf="showComplaintForm" src="/complaint.webp" class=" absolute inset-0 w-full h-full">
+        <div *ngIf="showComplaintForm" class="absolute size-10 top-1/2 left-1/2 bg-white">
+            //Fields
+            <button (click)="submitComplaint()">
+                Submit
+            </button>
+        </div>
+
+    </div>
+</div>
