@@ -24,6 +24,10 @@ export class AuthService implements OnInit {
         return !!this.loggedInUser();
     };
 
+    public doesEmailBelongToUser(email: string): boolean{
+        return email == this.loggedInUser()?.email;
+    }
+
     private async retrieveOrRecreateSession() {
         const session = await this.supabase.auth.getSession();
         if (session.data.session) {
@@ -66,5 +70,9 @@ export class AuthService implements OnInit {
             console.log("Logged in as: " + data.user);
             return true;
         }
+    }
+
+    async getCurrentUserEmail() {
+        return this.loggedInUser()?.email || 'error@lesvoeuxdeghislain.com'
     }
 }

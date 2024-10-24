@@ -60,19 +60,6 @@ export class IntroPageComponent implements OnInit, AfterViewInit {
         if (this.introVideoFilepath.includes("intro_qualite.mp4")) {
             this.isPlaying = false;
             this.showPasswordInput = true;
-        } else {
-            this.areWishesReadyForUser();
-        }
-    }
-
-    async areWishesReadyForUser() {
-        if (await this.wishesService.areWishesReady()) {
-            this.router.navigate(['/userselect']);
-        } else {
-            //this.router.navigate(['/comebacklater']);
-            this.dialog.open(NotReadyYetPopupComponent, {
-                panelClass: 'custom-dialog-container',
-            });
         }
     }
 
@@ -114,9 +101,7 @@ export class IntroPageComponent implements OnInit, AfterViewInit {
             await this.logService.logPasswordAttempt(value);
             const success = await this.authService.authenticateUser(value);
             if (success) {
-                this.showPasswordInput = false;
-                this.introVideoFilepath = "/videos/intro2.mp4";
-                this.videoPlayer.nativeElement.load();
+                this.router.navigate(['userselect']);
             }
         }
     }
@@ -126,12 +111,7 @@ export class IntroPageComponent implements OnInit, AfterViewInit {
         video.currentTime = video.duration - (this.secondsBeforeEnd / video.playbackRate);
     }
 
-    async skipLogin() {
-        if (await this.authService.isLoggedIn()) {
-            //console.log("Already logged in");
-            this.router.navigate(['/userselect']);
-        }
-    }
+
 
 
 }

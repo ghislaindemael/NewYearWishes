@@ -6,7 +6,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
 .custom-dialog-container {
     position: fixed !important;
     top: 50% !important;
@@ -19,8 +18,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* The Holy Line */
 .mat-mdc-dialog-surface {
-    background-color: transparent !important;
+    background: transparent !important;
+    border-radius: 12px !important;
 }
+
+
 
 
 html, body { height: 100%; }

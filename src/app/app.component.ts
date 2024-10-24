@@ -6,11 +6,13 @@ import {HttpClient} from '@angular/common/http';
 import {firstValueFrom} from 'rxjs';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgIf} from '@angular/common';
+import {MusicButtonComponent} from './components/music-button/music-button.component';
+import {AuthService} from './auth/services/auth/auth.service';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, LanguageSelectionComponent, MatDialogModule, NgIf],
+    imports: [RouterOutlet, LanguageSelectionComponent, MatDialogModule, NgIf, MusicButtonComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit {
         private cookieService: CookieService,
         private http: HttpClient,
         private router: Router,
+        private authService: AuthService,
     ) {
     }
 
@@ -61,5 +64,12 @@ export class AppComponent implements OnInit {
 
     goBack() {
         this.router.navigate(['/']);
+    }
+
+    async skipLogin() {
+        if (await this.authService.isLoggedIn()) {
+            //console.log("Already logged in");
+            this.router.navigate(['/userselect']);
+        }
     }
 }
