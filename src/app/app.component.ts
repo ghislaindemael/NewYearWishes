@@ -8,6 +8,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {NgIf} from '@angular/common';
 import {MusicButtonComponent} from './components/music-button/music-button.component';
 import {AuthService} from './auth/services/auth/auth.service';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Component({
     selector: 'app-root',
@@ -25,7 +26,9 @@ export class AppComponent implements OnInit {
         private http: HttpClient,
         private router: Router,
         private authService: AuthService,
+        private deviceService: DeviceDetectorService
     ) {
+        this.checkIfNotMobile();
     }
 
     ngOnInit() {
@@ -70,6 +73,12 @@ export class AppComponent implements OnInit {
         if (await this.authService.isLoggedIn()) {
             //console.log("Already logged in");
             this.router.navigate(['/userselect']);
+        }
+    }
+
+    private checkIfNotMobile() {
+        if(this.deviceService.isMobile()){
+            this.router.navigate(['/nomobile']);
         }
     }
 }

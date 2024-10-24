@@ -4,6 +4,7 @@ import {UserSelectPageComponent} from './components/user-select-page/user-select
 import {isLoggedIn} from './auth/is-logged-in.guard';
 import {ComplaintOfficeComponent} from './components/complaint-office/complaint-office.component';
 import {WishesPageComponent} from './components/wishes-page/wishes-page.component';
+import {NoMobilePageComponent} from './components/no-mobile/no-mobile-page.component';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,10 @@ export const routes: Routes = [
     {
         path: "complaintoffice",
         component: ComplaintOfficeComponent
+    },
+    {
+        path: "nomobile",
+        component: NoMobilePageComponent
     },
     {
         path: "**",
