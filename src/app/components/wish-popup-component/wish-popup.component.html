@@ -1,0 +1,12 @@
+<div class="w-fit flex flex-col p-3 gap-1 items-center rounded-xl bg-white">
+    <button (click)="closeAndRemoveWish()" class="text-red-500 text-xl font-bold">
+        X
+    </button>
+
+    <!-- Wish details -->
+    <div>
+        <h2>{{ wish.title }}</h2>
+        <p>{{ wish.subtitle }}</p>
+        <p>{{ wish.content }}</p>
+    </div>
+</div>
