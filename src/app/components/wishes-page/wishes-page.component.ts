@@ -33,8 +33,6 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
 
     async ngAfterViewInit() {
         this.wishes = await this.wishesService.getWishes();
-
-        // Call generateRandomPositions after wishes are fetched
         this.generateRandomPositions();
     }
 
@@ -49,8 +47,6 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
         this.wishes.forEach(() => {
             const randomTop = Math.random() * (containerHeight - 100);
             const randomLeft = Math.random() * (containerWidth - 100);
-
-            console.log(randomTop, randomLeft);
 
             this.wishesPositions.push({
                 top: randomTop,
@@ -73,7 +69,7 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
 
     removeWish(wishToRemove: Wish) {
         this.wishes = this.wishes.filter(wish => wish !== wishToRemove);
-        this.wishesPositions = this.wishesPositions.slice(0, this.wishes.length); // Keep positions in sync
+        this.wishesPositions = this.wishesPositions.slice(0, this.wishes.length);
     }
 
 
