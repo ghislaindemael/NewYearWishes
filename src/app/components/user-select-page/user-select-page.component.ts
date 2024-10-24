@@ -109,10 +109,10 @@ export class UserSelectPageComponent implements OnInit, AfterViewInit {
         video.currentTime = video.duration - (this.secondsBeforeEnd / video.playbackRate);
     }
 
-    async selectUser(email: string) {
+    async selectUser(user: UserLabel) {
         //console.log(email);
-        if (this.authService.doesEmailBelongToUser(email)) {
-            if (await this.wishesService.areWishesReady()) {
+        if (this.authService.doesEmailBelongToUser(user.app_email)) {
+            if (user.ready) {
                 this.showUsernames = false;
                 this.videoPath = '/videos/you_may_enter.mp4';
                 this.playVideo()

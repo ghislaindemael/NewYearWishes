@@ -1,4 +1,15 @@
-<div class="min-h-full w-full flex flex-col items-center justify-center relative">
+<div class="w-full min-h-full flex flex-col items-center justify-center relative" #parentContainer>
+    <img src="/cavernofwonders.webp" class="absolute inset-0 w-full">
 
-    <p>Wishes</p>
+    <div *ngFor="let wish of wishes; let i = index"
+         class="wish-container absolute"
+         [ngStyle]="{'top': wishesPositions[i]?.top + 'px', 'left': wishesPositions[i]?.left + 'px'}">
+        <img
+                src="/small_lamp.png"
+                alt="Lamp"
+                class="w-12 h-8 transition-transform duration-300 ease-in-out hover:scale-[1.2] cursor-pointer"
+                (click)="viewWish(wish)"
+        >
+    </div>
+
 </div>

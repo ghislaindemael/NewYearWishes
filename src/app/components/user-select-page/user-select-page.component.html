@@ -27,7 +27,7 @@
     <div *ngIf="showUsernames" class="absolute w-4/5 h-fit -translate-y-1/2 top-1/2 left-[10%]">
         <div class="size-full grid grid-cols-5 gap-2">
             <div *ngFor="let user of userlabels" class="rounded-xl bg-white p-1 flex items-center justify-center hover:bg-gray-300"
-                 (click)="selectUser(user.app_email)">
+                 (click)="selectUser(user)">
                 <div class="max-sm:text-xs text-center">
                     {{ user.name }}
                 </div>
