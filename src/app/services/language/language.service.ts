@@ -34,16 +34,11 @@ export class LanguageService {
             howtocontact: 'Un modo per contattarti',
             yourcomplaint: 'Il tuo reclamo',
             send: 'Inviare'
-
         }
     };
 
     constructor(private cookieService: CookieService) {
         this.language = this.cookieService.getItem('lang') || 'fr';
-    }
-
-    setLanguage(lang: string) {
-        this.language = lang;
     }
 
     getText(slug: string): string {
