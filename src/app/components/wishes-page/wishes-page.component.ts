@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NgForOf, NgIf, NgStyle} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {Wish} from '../../types/Wish.type';
 import {WishesService} from '../../services/wishes/wishes.service';
 import {MatDialog} from '@angular/material/dialog';
@@ -13,7 +13,8 @@ import {LanguageService} from '../../services/language/language.service';
     imports: [
         NgIf,
         NgStyle,
-        NgForOf
+        NgForOf,
+        NgClass
     ],
     templateUrl: './wishes-page.component.html',
     styleUrl: './wishes-page.component.css'
@@ -21,7 +22,15 @@ import {LanguageService} from '../../services/language/language.service';
 export class WishesPageComponent implements OnInit, AfterViewInit {
 
     wishes: Wish[] = [];
-    wishesPositions: { top: number, left: number }[] = [];
+    hoveredWishIndex: number | null = null;
+    wishesPositions: {
+        top: number,
+        left: number,
+        rotation: number,
+        width: number,
+        height: number,
+        flip: boolean
+    }[] = [];
     currentLang: string = 'fr';
 
     @ViewChild('parentContainer') parentContainer!: ElementRef;
@@ -50,21 +59,34 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
         const containerWidth = parentElement.clientWidth;
         const containerHeight = parentElement.clientHeight;
 
-
         this.wishesPositions = [];
 
         this.wishes.forEach(() => {
             const randomTop = Math.random() * (containerHeight - 100);
             const randomLeft = Math.random() * (containerWidth - 100);
 
+            const randomRotation = (Math.random() * 40) - 20;
+
+            const randomWidth = Math.random() * (60 - 30) + 30;
+
+            const randomHeight = (randomWidth * 13) / 20;
+            const randomFlip = Math.random() < 0.5;
+
             this.wishesPositions.push({
                 top: randomTop,
-                left: randomLeft
+                left: randomLeft,
+                rotation: randomRotation,
+                width: randomWidth,
+                height: randomHeight,
+                flip: randomFlip,
             });
         });
     }
 
     viewWish(wish: Wish) {
+
+        wish.viewed = true;
+
         const dialogRef = this.dialog.open(WishPopupComponent, {
             panelClass: 'custom-dialog-container',
             data: { wish, lang: this.languageService }
@@ -81,7 +103,6 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
         if (wish) {
             wish.viewed = true;
         }
-
         this.wishesPositions = this.wishesPositions.slice(0, this.wishes.length);
     }
 
