@@ -19,7 +19,7 @@ export class ConfigPageComponent {
 
     setLanguage(lang: string) {
         this.cookieService.setItem('lang', lang);
-        this.router.navigate(['/intro']);
+        this.router.navigate(['/intro']).then(r => window.location.reload());
     }
 
 }
