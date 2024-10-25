@@ -4,6 +4,7 @@ import {Wish} from '../../types/Wish.type';
 import {WishesService} from '../../services/wishes/wishes.service';
 import {MatDialog} from '@angular/material/dialog';
 import {WishPopupComponent} from '../wish-popup-component/wish-popup.component';
+import {CookieService} from '../../services/cookie/cookie.service';
 
 @Component({
   selector: 'app-wishes-page',
@@ -23,8 +24,8 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
 
     @ViewChild('parentContainer') parentContainer!: ElementRef;
 
-    constructor(private wishesService: WishesService, private dialog: MatDialog) {
-
+    constructor(private wishesService: WishesService, private dialog: MatDialog, private cookieService: CookieService,) {
+        this.cookieService.setItem("reachedwishes", true);
     }
 
     async ngOnInit() {

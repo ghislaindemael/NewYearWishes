@@ -5,8 +5,13 @@ import {isLoggedIn} from './auth/is-logged-in.guard';
 import {ComplaintOfficeComponent} from './components/complaint-office/complaint-office.component';
 import {WishesPageComponent} from './components/wishes-page/wishes-page.component';
 import {NoMobilePageComponent} from './components/no-mobile/no-mobile-page.component';
+import {ConfigPageComponent} from './components/config/config-page.component';
 
 export const routes: Routes = [
+    {
+      path: "config",
+      component: ConfigPageComponent,
+    },
     {
         path: "intro",
         component: IntroPageComponent,
