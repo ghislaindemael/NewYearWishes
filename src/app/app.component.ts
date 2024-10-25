@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
 
     private async checkIfLangIsSet() {
         if (!this.cookieService.getItem('lang')) {
-            let firstLang = await this.getUserLangByCountry() || 'fr'
+            let firstLang = (await this.getUserLangByCountry()) || 'fr'
             this.cookieService.setItem('lang', firstLang);
             //this.router.navigate(['/config']);
         }

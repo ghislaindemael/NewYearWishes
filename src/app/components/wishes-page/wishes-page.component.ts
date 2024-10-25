@@ -69,8 +69,9 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
 
             const randomRotation = (Math.random() * 40) - 20;
 
-            const randomWidthPercent = (Math.random() * (60 - 20) + 30) / containerWidth * 100;
-            const randomHeightPercent = (randomWidthPercent * 13) / 20;
+            const randomWidthInPixels = Math.random() * (containerWidth * 0.069) + (containerWidth * 0.042);
+            const randomWidthPercent = (randomWidthInPixels / containerWidth) * 100;
+            const randomHeightPercent = (randomWidthInPixels * 13 / 20) / containerHeight * 100;
 
             const randomFlip = Math.random() < 0.5;
 
@@ -92,7 +93,7 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
 
         const dialogRef = this.dialog.open(WishPopupComponent, {
             panelClass: 'custom-dialog-container',
-            data: { wish, lang: this.languageService }
+            data: {wish, lang: this.languageService}
         });
 
         dialogRef.componentInstance.wishRemoved.subscribe((removedWish: number) => {
@@ -108,7 +109,6 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
         }
         this.wishesPositions = this.wishesPositions.slice(0, this.wishes.length);
     }
-
 
 }
 
