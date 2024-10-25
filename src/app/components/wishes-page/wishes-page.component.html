@@ -5,23 +5,24 @@
          class="wish-container absolute"
          [ngStyle]="{
            'top': wishesPositions[i]?.top + '%',
-           'left': wishesPositions[i]?.left + '%'
+           'left': wishesPositions[i]?.left + '%',
+           'width': wishesPositions[i]?.width + '%',
+           'height': wishesPositions[i]?.height + '%'
          }"
-         (mouseenter)="hoveredWishIndex = i"
-         (mouseleave)="hoveredWishIndex = null">
+    >
         <img
             *ngIf="!wish.viewed"
             src="/magiclamp.png"
             alt="Lamp"
             [ngStyle]="{
-              'width': wishesPositions[i]?.width + '%',
-              'height': wishesPositions[i]?.height + '%',
               'transform':
                   'rotate(' + wishesPositions[i]?.rotation + 'deg) ' +
                   'scaleX(' + (wishesPositions[i]?.flip ? -1 : 1) + ')' +
-                  (hoveredWishIndex === i ? ' scale(1.2)' : ''),
-              'aspect-ratio': '20 / 13'
+                  (hoveredWishIndex === i ? ' scale(1.35)' : ''),
             }"
+            (mouseenter)="hoveredWishIndex = i"
+            (mouseleave)="hoveredWishIndex = null"
+
             class="transition-transform duration-300 ease-in-out cursor-pointer"
             (click)="viewWish(wish)"
         >
