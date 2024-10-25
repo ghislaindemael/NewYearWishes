@@ -31,6 +31,10 @@ export class CookieService {
         return null;
     }
 
+    getLang(): string {
+        return this.storage?.getItem('lang') || 'fr';
+    }
+
     removeItem(key: string): void {
         this.storage?.removeItem(key);
     }

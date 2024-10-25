@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {CookieService} from './services/cookie/cookie.service';
 import {HttpClient} from '@angular/common/http';
-import {firstValueFrom} from 'rxjs';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgIf} from '@angular/common';
 import {AuthService} from './auth/services/auth/auth.service';
@@ -26,7 +25,7 @@ export class AppComponent implements OnInit {
         private router: Router,
         private authService: AuthService,
         private deviceService: DeviceDetectorService,
-        private lang: LanguageService,
+        protected lang: LanguageService,
     ) {
         this.checkIfNotMobile();
         this.checkIfLangIsSet();
@@ -38,22 +37,6 @@ export class AppComponent implements OnInit {
             //console.log(this.currentUrl);
         });
 
-    }
-
-    async setUserLangByCountry(): Promise<void> {
-        try {
-            const response = await firstValueFrom(this.http.get<any>('https://ipapi.co/json/'));
-            //console.log(response);
-            let lang = 'FR';
-            if (response.country_code === 'IT') {
-                lang = 'IT';
-            } else if (response.country_code === 'GB' || response.country_code === 'US') {
-                lang = 'EN';
-            }
-            this.cookieService.setItem('lang', lang);
-        } catch (error) {
-            console.error('Error getting user country:', error);
-        }
     }
 
     goToComplaintOffice() {

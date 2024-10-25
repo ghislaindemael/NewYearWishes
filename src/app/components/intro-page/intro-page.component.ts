@@ -7,6 +7,7 @@ import {WishesService} from '../../services/wishes/wishes.service';
 import {LogService} from '../../services/log/log.service';
 import {NotReadyYetPopupComponent} from '../not-ready-yet-popup/not-ready-yet-popup.component';
 import {MatDialog} from '@angular/material/dialog';
+import {LanguageService} from '../../services/language/language.service';
 
 
 @Component({
@@ -38,17 +39,18 @@ export class IntroPageComponent implements OnInit, AfterViewInit {
         private wishesService: WishesService,
         private logService: LogService,
         private dialog: MatDialog,
+        protected lang: LanguageService
     ) {
-        const lang = this.cookieService.getItem('lang');
-        this.introVideoFilepath = `/videos/${lang}/intro_qualite.mp4`;
+        const language = this.cookieService.getItem('lang');
+        this.introVideoFilepath = `/videos/${language}/intro_qualite.mp4`;
     }
 
     ngOnInit() {
     }
 
     ngAfterViewInit() {
-        const lang = this.cookieService.getItem('lang');
-        this.introVideoFilepath = `/videos/${lang}/intro_qualite.mp4`;
+        const language = this.cookieService.getItem('lang');
+        this.introVideoFilepath = `/videos/${language}/intro_qualite.mp4`;
         this.cdr.detectChanges();
     }
 
