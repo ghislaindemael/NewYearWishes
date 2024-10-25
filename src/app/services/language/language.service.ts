@@ -6,7 +6,7 @@ import {CookieService} from '../cookie/cookie.service';
 })
 export class LanguageService {
 
-    private language = 'fr';
+    private language: string;
     private dictionary: { [key: string]: { [key: string]: string } } = {
         fr: {
             questionremarque: 'Question ? Remarque ?',
@@ -15,7 +15,8 @@ export class LanguageService {
             yourname: 'Ton nom',
             howtocontact: 'Un moyen de te contacter',
             yourcomplaint: 'Ta plainte',
-            send: 'Envoyer'
+            send: 'Envoyer',
+            thankyoufor: 'Merci pour'
         },
         en: {
             questionremarque: 'Question ? Opinion ?',
@@ -24,7 +25,8 @@ export class LanguageService {
             yourname: 'Your name',
             howtocontact: 'A way to contact you',
             yourcomplaint: 'Your complaint',
-            send: 'Send'
+            send: 'Send',
+            thankyoufor: 'Thank you for'
         },
         it: {
             questionremarque: 'Domanda ? Reclamo ?',
@@ -33,7 +35,8 @@ export class LanguageService {
             yourname: 'Il tuo nome',
             howtocontact: 'Un modo per contattarti',
             yourcomplaint: 'Il tuo reclamo',
-            send: 'Inviare'
+            send: 'Inviare',
+            thankyoufor: 'Grazie per'
         }
     };
 

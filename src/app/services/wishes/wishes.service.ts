@@ -30,6 +30,12 @@ export class WishesService {
             .select('*')
             .eq('user_email', await this.authService.getCurrentUserEmail());
         if (error) throw error;
+        if (data) {
+            data.forEach(wish => {
+                wish.viewed = false;
+            });
+        }
+
         return data as Wish[];
     }
 }

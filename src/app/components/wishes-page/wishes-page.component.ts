@@ -5,26 +5,33 @@ import {WishesService} from '../../services/wishes/wishes.service';
 import {MatDialog} from '@angular/material/dialog';
 import {WishPopupComponent} from '../wish-popup-component/wish-popup.component';
 import {CookieService} from '../../services/cookie/cookie.service';
+import {LanguageService} from '../../services/language/language.service';
 
 @Component({
-  selector: 'app-wishes-page',
-  standalone: true,
+    selector: 'app-wishes-page',
+    standalone: true,
     imports: [
         NgIf,
         NgStyle,
         NgForOf
     ],
-  templateUrl: './wishes-page.component.html',
-  styleUrl: './wishes-page.component.css'
+    templateUrl: './wishes-page.component.html',
+    styleUrl: './wishes-page.component.css'
 })
 export class WishesPageComponent implements OnInit, AfterViewInit {
 
     wishes: Wish[] = [];
-    wishesPositions: {top: number, left: number}[] = [];
+    wishesPositions: { top: number, left: number }[] = [];
+    currentLang: string = 'fr';
 
     @ViewChild('parentContainer') parentContainer!: ElementRef;
 
-    constructor(private wishesService: WishesService, private dialog: MatDialog, private cookieService: CookieService,) {
+    constructor(
+        private wishesService: WishesService,
+        private dialog: MatDialog,
+        private cookieService: CookieService,
+        private languageService: LanguageService
+    ) {
         this.cookieService.setItem("reachedwishes", true);
     }
 
@@ -35,6 +42,7 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
     async ngAfterViewInit() {
         this.wishes = await this.wishesService.getWishes();
         this.generateRandomPositions();
+        this.currentLang = this.cookieService.getItem('lang') || 'fr';
     }
 
     generateRandomPositions() {
@@ -59,17 +67,21 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
     viewWish(wish: Wish) {
         const dialogRef = this.dialog.open(WishPopupComponent, {
             panelClass: 'custom-dialog-container',
-            data: wish
+            data: { wish, lang: this.languageService }
         });
 
-        dialogRef.componentInstance.wishRemoved.subscribe((removedWish: Wish) => {
+        dialogRef.componentInstance.wishRemoved.subscribe((removedWish: number) => {
             this.removeWish(removedWish);
         });
     }
 
 
-    removeWish(wishToRemove: Wish) {
-        this.wishes = this.wishes.filter(wish => wish !== wishToRemove);
+    removeWish(wishToViewId: number) {
+        const wish = this.wishes.find(wish => wish.id === wishToViewId);
+        if (wish) {
+            wish.viewed = true;
+        }
+
         this.wishesPositions = this.wishesPositions.slice(0, this.wishes.length);
     }
 
