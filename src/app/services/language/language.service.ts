@@ -65,4 +65,12 @@ export class LanguageService {
     getText(slug: string): string {
         return this.dictionary[this.language]?.[slug] || '';
     }
+
+    getTextOfLang(lang: string, slug: string): string {
+        return this.dictionary[lang]?.[slug] || '';
+    }
+
+    setLanguage(lang: string) {
+        this.language = lang;
+    }
 }
