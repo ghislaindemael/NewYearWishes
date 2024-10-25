@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {WishPopupComponent} from '../wish-popup-component/wish-popup.component';
 import {CookieService} from '../../services/cookie/cookie.service';
 import {LanguageService} from '../../services/language/language.service';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Component({
     selector: 'app-wishes-page',
@@ -39,9 +40,10 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
         private wishesService: WishesService,
         private dialog: MatDialog,
         private cookieService: CookieService,
-        private languageService: LanguageService
+        private languageService: LanguageService,
     ) {
         this.cookieService.setItem("reachedwishes", true);
+
     }
 
     async ngOnInit() {
@@ -62,26 +64,27 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
         this.wishesPositions = [];
 
         this.wishes.forEach(() => {
-            const randomTop = Math.random() * (containerHeight - 100);
-            const randomLeft = Math.random() * (containerWidth - 100);
+            const randomTopPercent = (Math.random() * (containerHeight - 100)) / containerHeight * 100;
+            const randomLeftPercent = (Math.random() * (containerWidth - 100)) / containerWidth * 100;
 
             const randomRotation = (Math.random() * 40) - 20;
 
-            const randomWidth = Math.random() * (60 - 30) + 30;
+            const randomWidthPercent = (Math.random() * (60 - 20) + 30) / containerWidth * 100;
+            const randomHeightPercent = (randomWidthPercent * 13) / 20;
 
-            const randomHeight = (randomWidth * 13) / 20;
             const randomFlip = Math.random() < 0.5;
 
             this.wishesPositions.push({
-                top: randomTop,
-                left: randomLeft,
+                top: randomTopPercent,
+                left: randomLeftPercent,
                 rotation: randomRotation,
-                width: randomWidth,
-                height: randomHeight,
+                width: randomWidthPercent,
+                height: randomHeightPercent,
                 flip: randomFlip,
             });
         });
     }
+
 
     viewWish(wish: Wish) {
 

@@ -1,6 +1,6 @@
 <div class="w-full max-h-screen flex flex-col contain-content">
-    <div *ngIf="currentUrl !== '/nomobile'" class="p-1 flex place-content-between gap-1">
-        <div class="flex gap-1">
+    <div *ngIf="currentUrl !== '/nomobile'" class="p-1 flex place-content-between gap-1 items-center">
+        <div class="h-fit flex gap-1">
             <div class="p-1 rounded-md bg-gray-100 border-2 border-gray-400" (click)="chooseLanguage()">
                 <img src="/icons/{{ cookieService.getItem('lang') || 'fr' }}.png" class="size-6">
             </div>
@@ -30,9 +30,9 @@
         </div>
 
         <div *ngIf="currentUrl !== '/complaintoffice'"
-             class=" px-1 rounded-md bg-gray-100 border-2 border-gray-400 flex hover:cursor-pointer"
+             class=" px-1 rounded-md bg-gray-100 border-2 border-gray-400 flex hover:cursor-pointer max-sm:flex-row-reverse"
              (click)="goToComplaintOffice()">
-            <div class="flex items-center text-lg">
+            <div class="flex items-center text-lg max-sm:hidden">
                 {{lang.getText('questionremarque')}}
             </div>
             <div class=" size-8 flex items-center justify-center">

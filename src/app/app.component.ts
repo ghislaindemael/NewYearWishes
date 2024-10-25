@@ -7,6 +7,7 @@ import {NgIf} from '@angular/common';
 import {AuthService} from './auth/services/auth/auth.service';
 import {DeviceDetectorService} from 'ngx-device-detector';
 import {LanguageService} from './services/language/language.service';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit {
         private deviceService: DeviceDetectorService,
         protected lang: LanguageService,
     ) {
-        this.checkIfNotMobile();
+        this.checkIfMobile();
         this.checkIfLangIsSet();
     }
 
@@ -54,15 +55,24 @@ export class AppComponent implements OnInit {
         }
     }
 
-    private checkIfNotMobile() {
-        if(this.deviceService.isMobile()){
-            this.router.navigate(['/nomobile']);
+    private checkIfMobile() {
+        if (this.deviceService.isMobile()) {
+            const intervalId = setInterval(() => {
+                const warning = this.lang.getText('mobilewarning');
+
+                if (warning) {
+                    alert(warning);
+                    clearInterval(intervalId);
+                }
+            }, 100);
         }
     }
 
-    private checkIfLangIsSet() {
-        if(!this.cookieService.getItem('lang')){
-            this.router.navigate(['/config']);
+    private async checkIfLangIsSet() {
+        if (!this.cookieService.getItem('lang')) {
+            let firstLang = await this.getUserLangByCountry() || 'fr'
+            this.cookieService.setItem('lang', firstLang);
+            //this.router.navigate(['/config']);
         }
     }
 
@@ -81,6 +91,22 @@ export class AppComponent implements OnInit {
     goToWishes() {
         if(this.cookieService.getItem('reachedwishes')){
             this.router.navigate(['/wishes']);
+        }
+    }
+
+    async getUserLangByCountry(): Promise<string | undefined> {
+        try {
+            const response = await firstValueFrom(this.http.get<any>('https://ipapi.co/json/'));
+            let lang = 'FR';
+            if (response.country_code === 'IT') {
+                lang = 'IT';
+            } else if (response.country_code === 'GB' || response.country_code === 'US') {
+                lang = 'EN';
+            }
+            return lang;
+        } catch (error) {
+            console.error('Error getting user country:', error);
+            return undefined;
         }
     }
 }
