@@ -16,7 +16,13 @@ export class LanguageService {
             howtocontact: 'Un moyen de te contacter',
             yourcomplaint: 'Ta plainte',
             send: 'Envoyer',
-            thankyoufor: 'Merci pour'
+            thankyoufor: 'Merci pour',
+            aquote: 'Une citation',
+            aquoteofyou: "Une de tes citations",
+            bestpicofyou: "Une image de toi" ,
+            picofus: "Une image de nous",
+            adate: "Une date",
+            aplace: "Un lieu" ,
         },
         en: {
             questionremarque: 'Question ? Opinion ?',
@@ -26,7 +32,13 @@ export class LanguageService {
             howtocontact: 'A way to contact you',
             yourcomplaint: 'Your complaint',
             send: 'Send',
-            thankyoufor: 'Thank you for'
+            thankyoufor: 'Thank you for',
+            aquote: 'A quote',
+            aquoteofyou: "A quote by you",
+            bestpicofyou: "A pic of you" ,
+            picofus: "A pic of us",
+            adate: "A date",
+            aplace: "A place" ,
         },
         it: {
             questionremarque: 'Domanda ? Reclamo ?',
@@ -36,7 +48,13 @@ export class LanguageService {
             howtocontact: 'Un modo per contattarti',
             yourcomplaint: 'Il tuo reclamo',
             send: 'Inviare',
-            thankyoufor: 'Grazie per'
+            thankyoufor: 'Grazie per',
+            aquote: 'Una citazione',
+            aquoteofyou: "Una tua citazione",
+            bestpicofyou: "Una foto di te" ,
+            picofus: "Una foto di noi",
+            adate: "Una data",
+            aplace: "Un posto" ,
         }
     };
 

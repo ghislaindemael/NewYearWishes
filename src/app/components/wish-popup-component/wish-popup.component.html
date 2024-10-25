@@ -7,8 +7,9 @@
         </ng-template>
     </div>
 
-    <div class="text-lg italic">{{ wish.subtitle }}</div>
-    <div class="text-lg">{{ wish.content }}</div>
+    <div *ngIf="wish.subtitle" class="text-lg italic">({{ wish.subtitle }})</div>
+    <div *ngIf="wish.content" class="text-lg">{{ wish.content }}</div>
+
     <div class="flex gap-2">
         <div class="p-1 rounded-md bg-gray-100 border-2 border-gray-400" (click)="likeWish()">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -20,9 +21,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
         </div>
-
-
-
     </div>
 
 </div>
