@@ -9,6 +9,9 @@ export class LanguageService {
     private language: string;
     private dictionary: { [key: string]: { [key: string]: string } } = {
         fr: {
+            notreadyyet: "C'est pas encore prêt.",
+            comebacksoon: "Revenez dans un peu de temps (mais revenez) svp.",
+            understood: "Compris !",
             mobilewarning: "Ce site n'est pas optimisé pour les téléphones. Privilégiez votre ordinateur.",
             password: "Mot de passe",
             questionremarque: 'Question ? Remarque ?',
@@ -27,6 +30,9 @@ export class LanguageService {
             aplace: "Un lieu",
         },
         en: {
+            notreadyyet: "Wishes aren't ready for you (yet).",
+            comebacksoon: "Come back soon, a 1-2 days should do the trick",
+            understood: "Understood !",
             mobilewarning: "This website was not designed for mobiles. Experience is better on a computer.",
             password: "Password",
             questionremarque: 'Question ? Opinion ?',
@@ -45,6 +51,9 @@ export class LanguageService {
             aplace: "A place" ,
         },
         it: {
+            notreadyyet: "I tuoi auguri non sono ancora pronti.",
+            comebacksoon: "Torna presto, 1-2 giorni dovrebbero bastare.",
+            understood: "Capito !",
             mobilewarning: "Questo sito web non è stato progettato per i cellulari. L'esperienza è migliore su un computer.",
             password: "Password",
             questionremarque: 'Domanda ? Reclamo ?',

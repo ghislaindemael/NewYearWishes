@@ -1,8 +1,8 @@
 <div class="w-full h-fit flex flex-col p-3 gap-1 items-center rounded-xl bg-white">
 
-    <h2 class="w-full text-center text-2xl"> C'est pas encore prêt. </h2>
-    <h2 class="w-full text-center text-lg"> Revenez dans un peu de temps (mais pas trop longtemps) svp. </h2>
+    <h2 class="w-full text-center text-2xl"> {{lang.getText('notreadyyet')}} </h2>
+    <h2 class="w-full text-center text-lg"> {{lang.getText('comebacksoon')}} </h2>
     <button class="bg-gray-200 rounded-xl p-2" (click)="close()">
-        J'ai prévu de revenir bientôt
+        {{lang.getText('understood')}}
     </button>
 </div>

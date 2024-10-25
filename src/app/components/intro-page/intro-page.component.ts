@@ -16,7 +16,6 @@ import {LanguageService} from '../../services/language/language.service';
     imports: [
         RouterOutlet,
         NgIf,
-        NotReadyYetPopupComponent
     ],
     templateUrl: './intro-page.component.html',
     styleUrl: './intro-page.component.css'

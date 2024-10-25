@@ -1,5 +1,6 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
+import {LanguageService} from '../../services/language/language.service';
 
 @Component({
     selector: 'app-not-ready-yet-popup',
@@ -10,7 +11,7 @@ import {MatDialogRef} from '@angular/material/dialog';
     encapsulation: ViewEncapsulation.None
 })
 export class NotReadyYetPopupComponent {
-    constructor(private dialogRef: MatDialogRef<NotReadyYetPopupComponent>) {
+    constructor(private dialogRef: MatDialogRef<NotReadyYetPopupComponent>, protected lang: LanguageService) {
     }
 
     close(): void {

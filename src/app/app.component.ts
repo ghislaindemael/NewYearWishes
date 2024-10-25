@@ -8,6 +8,7 @@ import {AuthService} from './auth/services/auth/auth.service';
 import {DeviceDetectorService} from 'ngx-device-detector';
 import {LanguageService} from './services/language/language.service';
 import {firstValueFrom} from 'rxjs';
+import {WishesService} from './services/wishes/wishes.service';
 
 @Component({
     selector: 'app-root',
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
         private authService: AuthService,
         private deviceService: DeviceDetectorService,
         protected lang: LanguageService,
+        private wishesService: WishesService,
     ) {
         this.checkIfMobile();
         this.checkIfLangIsSet();
