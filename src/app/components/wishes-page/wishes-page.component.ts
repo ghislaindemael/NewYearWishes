@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {WishPopupComponent} from '../wish-popup-component/wish-popup.component';
 import {CookieService} from '../../services/cookie/cookie.service';
 import {LanguageService} from '../../services/language/language.service';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Component({
     selector: 'app-wishes-page',
@@ -39,9 +40,10 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
         private wishesService: WishesService,
         private dialog: MatDialog,
         private cookieService: CookieService,
-        private languageService: LanguageService
+        private languageService: LanguageService,
     ) {
         this.cookieService.setItem("reachedwishes", true);
+
     }
 
     async ngOnInit() {

@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {NotReadyYetPopupComponent} from '../not-ready-yet-popup/not-ready-yet-popup.component';
 import {UserLabel} from '../../types/UserLabel.type';
 import {OhReallyPopupComponent} from '../oh-really-popup/oh-really-popup.component';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Component({
   selector: 'app-user-select-page',
@@ -25,6 +26,8 @@ export class UserSelectPageComponent implements OnInit, AfterViewInit {
     secondsBeforeEnd = 0.1;
     isPlaying = false;
     userlabels: UserLabel[] = [];
+    namesToDisplay: number = 30;
+    isMobile: boolean = false;
 
     @ViewChild('videoPlayer', {static: true}) videoPlayer!: ElementRef<HTMLVideoElement>;
     @ViewChild('passwordInput', {static: true}) passwordInput!: ElementRef<HTMLInputElement>;
@@ -36,9 +39,13 @@ export class UserSelectPageComponent implements OnInit, AfterViewInit {
         private cdr: ChangeDetectorRef,
         private wishesService: WishesService,
         private dialog: MatDialog,
+        private deviceService: DeviceDetectorService
     ) {
         this.videoPath = `/videos/user_select.mp4`;
-
+        if(deviceService.isMobile()){
+            this.namesToDisplay = 10
+            this.isMobile = true;
+        }
     }
 
     async ngOnInit() {
@@ -60,10 +67,10 @@ export class UserSelectPageComponent implements OnInit, AfterViewInit {
         }
 
         if (currentUser) {
-            this.userlabels.splice(Math.floor(Math.random() * Math.min(25, this.userlabels.length + 1)), 0, currentUser);
+            this.userlabels.splice(Math.floor(Math.random() * Math.min(this.namesToDisplay, this.userlabels.length + 1)), 0, currentUser);
         }
 
-        this.userlabels = this.userlabels.slice(0, 25);
+        this.userlabels = this.userlabels.slice(0, this.namesToDisplay);
     }
 
     ngAfterViewInit() {
