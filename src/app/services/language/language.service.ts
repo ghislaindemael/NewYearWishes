@@ -9,6 +9,7 @@ export class LanguageService {
     private language: string;
     private dictionary: { [key: string]: { [key: string]: string } } = {
         fr: {
+            password: "Mot de passe",
             questionremarque: 'Question ? Remarque ?',
             complaintoffice: 'Bureau des plaintes',
             complaintform: 'Formulaire de plainte',
@@ -22,9 +23,10 @@ export class LanguageService {
             bestpicofyou: "Une image de toi" ,
             picofus: "Une image de nous",
             adate: "Une date",
-            aplace: "Un lieu" ,
+            aplace: "Un lieu",
         },
         en: {
+            password: "Password",
             questionremarque: 'Question ? Opinion ?',
             complaintoffice: 'Complaint office',
             complaintform: 'Complaint form',
@@ -41,6 +43,7 @@ export class LanguageService {
             aplace: "A place" ,
         },
         it: {
+            password: "Password",
             questionremarque: 'Domanda ? Reclamo ?',
             complaintoffice: 'Ufficio reclami',
             complaintform: 'Modulo di reclamo',

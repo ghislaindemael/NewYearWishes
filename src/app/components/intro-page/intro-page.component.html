@@ -26,7 +26,7 @@
     </button>
     <input #passwordInput *ngIf="showPasswordInput" type="text" (input)="onInputChange($event)"
            class="absolute top-[85%] left-1/2 transform -translate-x-1/2 w-1/5 max-w-[200px] p-1 border border-yellow-400 rounded-md focus:outline-none focus:border-yellow-400"
-           placeholder="Password">
+           placeholder="{{lang.getText('password')}}">
 
 </div>
 

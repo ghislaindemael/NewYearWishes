@@ -83,6 +83,7 @@ export class UserSelectPageComponent implements OnInit, AfterViewInit {
 
     onTimeUpdate(event: Event) {
         this.isPlaying = true;
+        this.showUsernames = false;
         const video = this.videoPlayer.nativeElement;
         const currentTime = video.currentTime;
         const duration = video.duration;
@@ -99,6 +100,7 @@ export class UserSelectPageComponent implements OnInit, AfterViewInit {
         this.videoPlayer.nativeElement.load();
         this.videoPlayer.nativeElement.play();
         this.isPlaying = true;
+        this.showUsernames = false;
     }
 
     skipVideo() {
