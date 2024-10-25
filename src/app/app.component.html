@@ -1,37 +1,54 @@
-<div class="w-full min-h-screen flex flex-col relative">
-    <div *ngIf="currentUrl !== '/nomobile'">
-        <div class="absolute top-0 left-0 z-10 p-1 flex gap-1">
-            <app-language-selection></app-language-selection>
-            <app-music-button></app-music-button>
-        </div>
-        <div class="absolute top-9 left-0 z-10 p-1 flex gap-1">
-            <div *ngIf="currentUrl !== '/intro'" class="p-1 rounded-md bg-gray-100 border-2 border-gray-400" (click)="goBack()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+<div class="w-full max-h-screen flex flex-col contain-content">
+    <div *ngIf="currentUrl !== '/nomobile'" class="p-1 flex place-content-between gap-1">
+        <div class="flex gap-1">
+            <div class="p-1 rounded-md bg-gray-100 border-2 border-gray-400" (click)="chooseLanguage()">
+                <img src="/icons/{{ cookieService.getItem('lang') || 'fr' }}.png" class="size-6">
+            </div>
+            <div class="p-1 rounded-md bg-gray-100 border-2 border-gray-400" (click)="playMusic()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z"/>
                 </svg>
+            </div>
+            <audio id="mibemol" src="/audiotracks/mibemol.mp3"></audio>
+            <div class="p-1 rounded-md bg-gray-100 border-2 border-gray-400"
+                 (click)="goBack()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
+                </svg>
+
             </div>
             <div class="p-1 rounded-md bg-gray-100 border-2 border-gray-400" (click)="skipLogin()">
                 <img src="/icons/scarab.png" class="size-6">
             </div>
+            <div class="p-1 rounded-md bg-gray-100 border-2 border-gray-400" (click)="goToWishes()">
+                <img src="/icons/lamp.png" class="size-6">
+            </div>
         </div>
+
+        <div *ngIf="currentUrl !== '/complaintoffice'"
+             class=" px-1 rounded-md bg-gray-100 border-2 border-gray-400 flex hover:cursor-pointer"
+             (click)="goToComplaintOffice()">
+            <div class="flex items-center text-lg">
+                Question ? Remarque ?
+            </div>
+            <div class=" size-8 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                     stroke="currentColor" class="size-6 hover:size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+                </svg>
+            </div>
+            <div class="min-w-fit min-h-full flex items-center gap-1">
+                Le bureau des plaintes
+            </div>
+        </div>
+        <audio src="/audiotracks/arabian-nights.mp3" autoplay loop [volume]="0.01"></audio>
     </div>
-    <div class="size-full" style="aspect-ratio: 16 / 9; max-width: 100vw; max-height: 100vh;">
-        <router-outlet ></router-outlet>
+    <div class="max-h-screen" style="aspect-ratio: 16 / 9;">
+        <router-outlet></router-outlet>
     </div>
-    <div *ngIf="currentUrl !== '/complaintoffice' && currentUrl !== '/nomobile'" class="absolute top-[92%] left-1/2 -translate-x-1/2 p-2 bg-amber-200 rounded-md flex gap-1 hover:cursor-pointer"
-         (click)="goToComplaintOffice()">
-        <div class="flex items-center text-lg">
-            Question ? Remarque ?
-        </div>
-        <div class=" size-8 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                 stroke="currentColor" class="size-6 hover:size-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
-            </svg>
-        </div>
-        <div class="min-w-fit min-h-full flex items-center gap-1">
-            Le bureau des plaintes
-        </div>
-    </div>
-    <audio src="/audiotracks/arabian-nights.mp3" autoplay loop [volume]="0.01"></audio>
+
 </div>

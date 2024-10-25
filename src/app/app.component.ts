@@ -1,19 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {CookieService} from './services/cookie/cookie.service';
-import {LanguageSelectionComponent} from './components/language-selection/language-selection.component';
 import {HttpClient} from '@angular/common/http';
 import {firstValueFrom} from 'rxjs';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgIf} from '@angular/common';
-import {MusicButtonComponent} from './components/music-button/music-button.component';
 import {AuthService} from './auth/services/auth/auth.service';
 import {DeviceDetectorService} from 'ngx-device-detector';
+import {LanguageService} from './services/language/language.service';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, LanguageSelectionComponent, MatDialogModule, NgIf, MusicButtonComponent],
+    imports: [RouterOutlet, MatDialogModule, NgIf],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
@@ -22,13 +21,15 @@ export class AppComponent implements OnInit {
     currentUrl: string = '';
 
     constructor(
-        private cookieService: CookieService,
+        protected cookieService: CookieService,
         private http: HttpClient,
         private router: Router,
         private authService: AuthService,
-        private deviceService: DeviceDetectorService
+        private deviceService: DeviceDetectorService,
+        private lang: LanguageService,
     ) {
         this.checkIfNotMobile();
+        this.checkIfLangIsSet();
     }
 
     ngOnInit() {
@@ -37,27 +38,21 @@ export class AppComponent implements OnInit {
             //console.log(this.currentUrl);
         });
 
-        if (this.cookieService.getItem('lang') == null) {
-            this.getUserCountry().then(country => {
-                let lang = 'FR';
-                if (country === 'IT') {
-                    lang = 'IT';
-                } else if (country === 'GB' || country === 'US') {
-                    lang = 'EN';
-                }
-                this.cookieService.setItem('lang', lang);
-            });
-        }
     }
 
-    async getUserCountry(): Promise<string> {
+    async setUserLangByCountry(): Promise<void> {
         try {
             const response = await firstValueFrom(this.http.get<any>('https://ipapi.co/json/'));
             //console.log(response);
-            return response.country_code;
+            let lang = 'FR';
+            if (response.country_code === 'IT') {
+                lang = 'IT';
+            } else if (response.country_code === 'GB' || response.country_code === 'US') {
+                lang = 'EN';
+            }
+            this.cookieService.setItem('lang', lang);
         } catch (error) {
             console.error('Error getting user country:', error);
-            return 'FR';
         }
     }
 
@@ -79,6 +74,30 @@ export class AppComponent implements OnInit {
     private checkIfNotMobile() {
         if(this.deviceService.isMobile()){
             this.router.navigate(['/nomobile']);
+        }
+    }
+
+    private checkIfLangIsSet() {
+        if(!this.cookieService.getItem('lang')){
+            this.router.navigate(['/config']);
+        }
+    }
+
+    playMusic() {
+        const audio = document.getElementById('mibemol') as HTMLAudioElement;
+        if (audio) {
+            audio.currentTime = 0;
+            audio.play();
+        }
+    }
+
+    chooseLanguage() {
+        this.router.navigate(['/config']);
+    }
+
+    goToWishes() {
+        if(this.cookieService.getItem('reachedwishes')){
+            this.router.navigate(['/wishes']);
         }
     }
 }

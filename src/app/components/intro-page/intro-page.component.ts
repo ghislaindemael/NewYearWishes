@@ -2,11 +2,9 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChi
 import {Router, RouterOutlet} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../auth/services/auth/auth.service';
-import {LanguageSelectionComponent} from '../language-selection/language-selection.component';
 import {CookieService} from '../../services/cookie/cookie.service';
 import {WishesService} from '../../services/wishes/wishes.service';
 import {LogService} from '../../services/log/log.service';
-import {MusicButtonComponent} from '../music-button/music-button.component';
 import {NotReadyYetPopupComponent} from '../not-ready-yet-popup/not-ready-yet-popup.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -17,8 +15,6 @@ import {MatDialog} from '@angular/material/dialog';
     imports: [
         RouterOutlet,
         NgIf,
-        LanguageSelectionComponent,
-        MusicButtonComponent,
         NotReadyYetPopupComponent
     ],
     templateUrl: './intro-page.component.html',

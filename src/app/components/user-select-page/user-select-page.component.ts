@@ -1,11 +1,9 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MusicButtonComponent} from '../music-button/music-button.component';
 import {NgForOf, NgIf} from '@angular/common';
 import {AuthService} from '../../auth/services/auth/auth.service';
 import {Router} from '@angular/router';
 import {CookieService} from '../../services/cookie/cookie.service';
 import {WishesService} from '../../services/wishes/wishes.service';
-import {LogService} from '../../services/log/log.service';
 import {MatDialog} from '@angular/material/dialog';
 import {NotReadyYetPopupComponent} from '../not-ready-yet-popup/not-ready-yet-popup.component';
 import {UserLabel} from '../../types/UserLabel.type';
@@ -15,7 +13,6 @@ import {OhReallyPopupComponent} from '../oh-really-popup/oh-really-popup.compone
   selector: 'app-user-select-page',
   standalone: true,
     imports: [
-        MusicButtonComponent,
         NgIf,
         NgForOf
     ],

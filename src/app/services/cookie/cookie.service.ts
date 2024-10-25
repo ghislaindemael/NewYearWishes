@@ -15,6 +15,7 @@ export class CookieService {
     }
 
     setItem(key: string, value: any): void {
+        this.removeItem(key);
         const data = {
             value: value,
         };
