@@ -51,4 +51,10 @@ export class WishesService {
         if(error) throw error;
         return data.signedUrl;
     }
+
+    async likeWish(wish: Wish): Promise<boolean> {
+        const {error} = await this.supabase.from('wishes').update({liked: true}).eq('id', wish.id);
+        if(error) throw error;
+        return true;
+    }
 }

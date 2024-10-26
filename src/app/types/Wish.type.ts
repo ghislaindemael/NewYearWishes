@@ -7,4 +7,5 @@ export interface Wish {
     image?: string,
     imageUrl?: string,
     viewed: boolean,
+    liked: boolean,
 }

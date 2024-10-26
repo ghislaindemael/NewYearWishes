@@ -88,27 +88,13 @@ export class WishesPageComponent implements OnInit, AfterViewInit {
 
 
     viewWish(wish: Wish) {
-
         wish.viewed = true;
-
-        const dialogRef = this.dialog.open(WishPopupComponent, {
+        this.dialog.open(WishPopupComponent, {
             panelClass: 'custom-dialog-container',
-            data: {wish, lang: this.languageService}
-        });
-
-        dialogRef.componentInstance.wishRemoved.subscribe((removedWish: number) => {
-            this.removeWish(removedWish);
+            data: {wish, lang: this.languageService, wishService: this.wishesService }
         });
     }
 
-
-    removeWish(wishToViewId: number) {
-        const wish = this.wishes.find(wish => wish.id === wishToViewId);
-        if (wish) {
-            wish.viewed = true;
-        }
-        this.wishesPositions = this.wishesPositions.slice(0, this.wishes.length);
-    }
 
 }
 
