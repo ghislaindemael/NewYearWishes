@@ -54,6 +54,8 @@ export class AppComponent implements OnInit {
         if (await this.authService.isLoggedIn()) {
             //console.log("Already logged in");
             this.router.navigate(['/userselect']);
+        } else {
+            alert(this.lang.getText('loginfirst'))
         }
     }
 
@@ -93,6 +95,8 @@ export class AppComponent implements OnInit {
     goToWishes() {
         if(this.cookieService.getItem('reachedwishes')){
             this.router.navigate(['/wishes']);
+        } else {
+            alert(this.lang.getText('didntreachwishesyet'))
         }
     }
 
@@ -110,5 +114,9 @@ export class AppComponent implements OnInit {
             console.error('Error getting user country:', error);
             return undefined;
         }
+    }
+
+    goToContactPage() {
+        this.router.navigate(['/contact'])
     }
 }

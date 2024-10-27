@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CookieService} from '../cookie/cookie.service';
+import {DatabaseService} from '../database/database.service';
 
 @Injectable({
     providedIn: 'root'
@@ -7,100 +8,19 @@ import {CookieService} from '../cookie/cookie.service';
 export class LanguageService {
 
     private language: string;
-    private dictionary: { [key: string]: { [key: string]: string } } = {
-        fr: {
-            notreadyyet: "C'est pas encore prêt.",
-            comebacksoon: "Revenez dans un peu de temps (mais revenez) svp.",
-            understood: "Compris !",
-            mobilewarning: "Ce site n'est pas optimisé pour les téléphones. Privilégiez votre ordinateur.",
-            password: "Mot de passe",
-            questionremarque: 'Question ? Remarque ?',
-            complaintoffice: 'Bureau des plaintes',
-            complaintform: 'Formulaire de plainte',
-            yourname: 'Ton nom',
-            howtocontact: 'Un moyen de te contacter',
-            yourcomplaint: 'Ta plainte',
-            send: 'Envoyer',
-            thankyoufor: 'Merci pour',
-            aquote: 'Une citation',
-            aquoteofyou: "Une de tes citations",
-            bestpicofyou: "Une image de toi",
-            bestpicofus: "Une image de nous",
-            adate: "Une date",
-            aplace: "Un lieu",
-            congratulations: "Félicitations !!!",
-            weshouldo: "On devrait faire",
-            someadvice: "Un conseil",
-            nothankyoufor: "Non-merci pour",
-            goodluckfor: "Bonne chance pour",
-            apicture: "Une image",
-        },
-        en: {
-            notreadyyet: "Wishes aren't ready for you (yet).",
-            comebacksoon: "Come back soon, a 1-2 days should do the trick",
-            understood: "Understood !",
-            mobilewarning: "This website was not designed for mobiles. Experience is better on a computer.",
-            password: "Password",
-            questionremarque: 'Question ? Opinion ?',
-            complaintoffice: 'Complaint office',
-            complaintform: 'Complaint form',
-            yourname: 'Your name',
-            howtocontact: 'A way to contact you',
-            yourcomplaint: 'Your complaint',
-            send: 'Send',
-            thankyoufor: 'Thank you for',
-            aquote: 'A quote',
-            aquoteofyou: "A quote by you",
-            bestpicofyou: "A pic of you",
-            bestpicofus: "A pic of us",
-            adate: "A date",
-            aplace: "A place",
-            congratulations: "Congratulations !!!",
-            weshouldo: "Whe should try out",
-            someadvice: "Some advice",
-            nothankyoufor: "No thank you for",
-            goodluckfor: "Good luck for",
-            apicture: "A pic",
-        },
-        it: {
-            notreadyyet: "I tuoi auguri non sono ancora pronti.",
-            comebacksoon: "Torna presto, 1-2 giorni dovrebbero bastare.",
-            understood: "Capito !",
-            mobilewarning: "Questo sito web non è stato progettato per i cellulari. L'esperienza è migliore su un computer.",
-            password: "Password",
-            questionremarque: 'Domanda ? Reclamo ?',
-            complaintoffice: 'Ufficio reclami',
-            complaintform: 'Modulo di reclamo',
-            yourname: 'Il tuo nome',
-            howtocontact: 'Un modo per contattarti',
-            yourcomplaint: 'Il tuo reclamo',
-            send: 'Inviare',
-            thankyoufor: 'Grazie per',
-            aquote: 'Una citazione',
-            aquoteofyou: "Una tua citazione",
-            bestpicofyou: "Una foto di te",
-            bestpicofus: "Una foto di noi",
-            adate: "Una data",
-            aplace: "Un posto",
-            congratulations: "Congratulazioni !!!",
-            weshouldo: "Dovremmo provare",
-            someadvice: "Un consiglio",
-            nothankyoufor: "Ce l'ho con te per",
-            goodluckfor: "Buona fortuna per",
-            apicture: "Una foto",
-        }
-    };
+    public dictionary: { [key: string]: string } = {};
 
-    constructor(private cookieService: CookieService) {
+    constructor(private cookieService: CookieService, private databaseService: DatabaseService) {
         this.language = this.cookieService.getItem('lang') || 'fr';
+        this.loadTranslations();
+    }
+
+    async loadTranslations(): Promise<void> {
+        this.dictionary = await this.databaseService.getTranslationsDictionary(this.language);
     }
 
     getText(slug: string): string {
-        return this.dictionary[this.language]?.[slug] || '';
-    }
-
-    getTextOfLang(lang: string, slug: string): string {
-        return this.dictionary[lang]?.[slug] || '';
+        return this.dictionary[slug] || '';
     }
 
     setLanguage(lang: string) {
