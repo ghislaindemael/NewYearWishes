@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NoMobilePageComponent } from './no-mobile-page.component';
+import { ContactPageComponent } from './contact-page.component';
 
-describe('NoMobileComponent', () => {
-  let component: NoMobilePageComponent;
-  let fixture: ComponentFixture<NoMobilePageComponent>;
+describe('ContactComponent', () => {
+  let component: ContactPageComponent;
+  let fixture: ComponentFixture<ContactPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoMobilePageComponent]
+      imports: [ContactPageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NoMobilePageComponent);
+    fixture = TestBed.createComponent(ContactPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

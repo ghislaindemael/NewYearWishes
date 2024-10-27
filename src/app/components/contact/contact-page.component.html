@@ -1,0 +1,50 @@
+<div class="h-full w-full flex flex-wrap gap-2 items-center justify-center relative" >
+    <div class="flex flex-wrap gap-2 ">
+        <div class="w-[400px] min-h-full flex flex-col justify-center p-3 rounded-xl border-2 border-gray-500 bg-white items-center">
+            <div class="text-2xl font-semibold mb-5">
+                {{ lang.getText('traditionalway') }}
+            </div>
+            <div class="text-lg mb-2 text-center">
+                {{ lang.getText('youcansendataddress') }}
+            </div>
+            <div class="flex flex-col gap-1">
+                <div *ngFor="let address of addresses" class="flex flex-col">
+                    <div>Ghislain Demaël, {{address.street}}</div>
+                    <div class="text-center">{{ address.city }}, {{address.country}}</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="w-[400px] flex flex-col p-3 rounded-xl border-2 border-gray-500 bg-white items-center">
+            <div class="text-2xl font-semibold mb-5">
+                {{ lang.getText('contactform') }}
+            </div>
+            <div class="flex flex-col w-full gap-2">
+                <div>
+                    <label for="name" class="block text-sm font-medium leading-6 text-gray-900">
+                        {{ lang.getText('yourname') }}
+                    </label>
+                    <div class="mt-2">
+                        <input type="text" name="name" id="name" [(ngModel)]="contactData.name"
+                               class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               placeholder="Isabelle le cactus">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="comment"
+                           class="block text-sm font-medium leading-6 text-gray-900">{{ lang.getText('yourmessage') }}</label>
+                    <div class="mt-2">
+                        <textarea rows="6" name="comment" id="comment" [(ngModel)]="contactData.message"
+                                  class="resize-none block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                    </div>
+                </div>
+                <button (click)="submitContact()" type="button"
+                        class="rounded-md font-semibold w-full bg-white px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                    {{ lang.getText('send') }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
