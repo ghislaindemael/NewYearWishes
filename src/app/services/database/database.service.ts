@@ -27,4 +27,24 @@ export class DatabaseService {
                 })
         );
     }
+
+    async getTranslationsDictionary(language: string): Promise<{ [key: string]: string }> {
+        try {
+            const { data, error } = await this.supabase
+                .from('translations')
+                .select(`slug, ${language}`);
+
+            if(!data) {
+                throw new Error();
+            }
+
+            return data.reduce((acc: { [key: string]: string }, item: any) => {
+                acc[item.slug] = item[language];
+                return acc;
+            }, {});
+        } catch (err) {
+            console.error('Error fetching translations:', err);
+            return {}; // Return an empty dictionary on error
+        }
+    }
 }
