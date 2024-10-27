@@ -5,7 +5,7 @@ import {isLoggedIn} from './auth/is-logged-in.guard';
 import {ComplaintOfficeComponent} from './components/complaint-office/complaint-office.component';
 import {WishesPageComponent} from './components/wishes-page/wishes-page.component';
 import {ConfigPageComponent} from './components/config/config-page.component';
-import {ContactPageComponent} from './components/contact/contact-page.component';
+import {ContactPageComponent} from './components/contact-page/contact-page.component';
 
 export const routes: Routes = [
     {

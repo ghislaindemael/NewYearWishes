@@ -6,7 +6,7 @@ import {NgForOf} from '@angular/common';
 import {Address} from '../../types/Address.type';
 
 @Component({
-  selector: 'app-contact',
+  selector: 'app-contact-page',
   standalone: true,
     imports: [
         ReactiveFormsModule,
