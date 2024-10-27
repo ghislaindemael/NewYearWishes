@@ -29,7 +29,11 @@ export class ContactPageComponent {
     }
 
     async submitContact() {
-        await this.databaseService.sendContact(this.contactData);
+        const success = await this.databaseService.sendContact(this.contactData);
+        if(success){
+            this.contactData = {name: "", message: ""};
+            alert(this.lang.getText('thanksformessage'))
+        }
     }
 
     private async setAdresses() {

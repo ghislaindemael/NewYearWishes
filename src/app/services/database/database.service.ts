@@ -52,7 +52,7 @@ export class DatabaseService {
     sendContact(contactData: { name: string; message: string }) {
         return from(
             this.supabase
-                .from('complaints')
+                .from('contact')
                 .insert([{ name: contactData.name, message: contactData.message }])
                 .then(response => {
                     if (response.error) {
