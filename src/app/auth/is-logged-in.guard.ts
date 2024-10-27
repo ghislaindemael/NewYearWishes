@@ -12,7 +12,7 @@ export const isLoggedIn: CanActivateFn = async () => {
         return true;
     }
 
-    alert(lang.getText('pleaselogin'));
+    alert(lang.getText('loginfirst'));
     router.navigate(["/intro"]);
     return false;
 };
